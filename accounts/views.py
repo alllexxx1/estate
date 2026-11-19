@@ -13,10 +13,9 @@ def register(request: HttpRequest) -> HttpResponse:
         with transaction.atomic():
             user = form.save()
             Profile.objects.create(user=user, role=form.cleaned_data['role'])
-
         return redirect('accounts:login')
 
-    return render(request, 'accounts/registration.html', {'form': form})
+    return render(request, 'accounts/register.html', {'form': form})
 
 
 def login():
