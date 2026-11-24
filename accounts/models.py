@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -7,7 +8,7 @@ class Profile(models.Model):
     OWNER = 'owner'
     ROLE_CHOICES = [(SEEKER, 'Соискатель'), (OWNER, 'Владелец')]
 
-    user = models.OneToOneField(
+    user: User = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name='profile',
