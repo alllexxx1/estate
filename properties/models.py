@@ -60,7 +60,7 @@ class DealRequest(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name='deal_requests',
-        verbose_name='Объект недвижимости'
+        verbose_name='Соискатель'
     )
     phone = models.CharField('Телефон для связи', max_length=30)
     message = models.CharField('Сообщение', max_length=400)
