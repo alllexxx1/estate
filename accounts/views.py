@@ -1,6 +1,7 @@
 from django.db import transaction
 from django.shortcuts import redirect, render
 from django.contrib.auth import login, logout
+from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpRequest, HttpResponse
 
 from .models import Profile
@@ -18,9 +19,14 @@ def register(request: HttpRequest) -> HttpResponse:
     return render(request, 'accounts/register.html', {'form': form})
 
 
-def login(request: HttpRequest) -> HttpResponse:
-    return render(request, 'accounts/login.html')
+def login_view(request: HttpRequest) -> HttpResponse:
+    form = AuthenticationForm(request, data=request.POST or None)
+    if request.method == 'POST' and form.is_valid():
+        login(request, form.get_user())
+        # TODO: redirect to the main page
+    return render(request, 'accounts/login.html', {'form': form})
 
 
-def logout():
-    ...
+def logout_view(request: HttpRequest) -> HttpResponse:
+    logout(request)
+    return redirect('accounts:login')
